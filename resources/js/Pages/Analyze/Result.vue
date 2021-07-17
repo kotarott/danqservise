@@ -28,8 +28,6 @@
             </div>
         </div>
 
-        <pre>{{$data}}</pre>
-
     </app-layout>
 </template>
 

@@ -15,13 +15,12 @@ class PrivacyTableSeeder extends Seeder
     {
         \DB::table('privacies')->insert([
             [
-                'status' => 'この質問のみ',
+                'privacyId' => 1,
+                'status' => '共有しない',
             ],
             [
-                'status' => 'パッケージ内',
-            ],
-            [
-                'status' => 'すべての質問',
+                'privacyId' => 3,
+                'status' => '共有する',
             ],
         ]);
     }

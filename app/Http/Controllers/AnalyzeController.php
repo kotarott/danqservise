@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Questiontype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -185,9 +186,13 @@ class AnalyzeController extends Controller
 
         $ids = $request->selected;
 
+        $questionType = Questiontype::select('typeId')
+            ->whereColumn('id', 'questions.questiontype_id')
+            ->getQuery();
+
         $questions = Question::whereIn('id', $ids)
-            ->select('id', 'title', 'questiontype_id')
-            // ->orderBy('id', 'asc')
+            ->select('id', 'title')
+            ->selectSub($questionType, 'typeId')
             ->get()
             ->toArray();
                 
@@ -197,23 +202,29 @@ class AnalyzeController extends Controller
             ->groupBy('user_id');
 
         foreach($questions as $question) {
-            if($question['questiontype_id'] == 1) {
+            if($question['typeId'] == 1) {
                 $answer = Answer::select('text')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
-            }else if($question['questiontype_id'] == 2) {
+            }else if($question['typeId'] == 2) {
                 $answer = Answer::select('selection')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
-            } else if($question['questiontype_id'] >=3 && $question['questiontype_id'] <= 6) {
+            } else if($question['typeId'] >=3 && $question['typeId'] <= 6) {
                 $answer = Answer::select('int')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
             }
             $answers = $answers->selectSub($answer, $question['id']);
@@ -230,9 +241,9 @@ class AnalyzeController extends Controller
 
         foreach($questions as $key=>$question){
 
-            if($question['questiontype_id'] <= 2) {
+            if($question['typeId'] <= 2) {
                 $questions[$key]['type'] = 'text';
-            } else if($question['questiontype_id'] >= 3 && $question['questiontype_id'] <= 6) {
+            } else if($question['typeId'] >= 3 && $question['typeId'] <= 6) {
                 $questions[$key]['type'] = "numeric";
             }
 
@@ -261,9 +272,13 @@ class AnalyzeController extends Controller
 
         $ids = collect($request->selected)->sort()->values()->toArray();
         
+        $questionType = Questiontype::select('typeId')
+            ->whereColumn('id', 'questions.questiontype_id')
+            ->getQuery();
+
         $questions = Question::whereIn('id', $ids)
-            ->select('id', 'title', 'questiontype_id')
-            ->orderBy('id', 'asc')
+            ->select('id', 'title')
+            ->selectSub($questionType, 'typeId')
             ->get()
             ->toArray();
 
@@ -273,23 +288,29 @@ class AnalyzeController extends Controller
             ->groupBy('user_id');
 
         foreach($questions as $question) {
-            if($question['questiontype_id'] == 1) {
+            if($question['typeId'] == 1) {
                 $answer = Answer::select('text')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
-            }else if($question['questiontype_id'] == 2) {
+            }else if($question['typeId'] == 2) {
                 $answer = Answer::select('selection')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
-            } else if($question['questiontype_id'] >=3 && $question['questiontype_id'] <= 6) {
+            } else if($question['typeId'] >=3 && $question['typeId'] <= 6) {
                 $answer = Answer::select('int')
                     ->whereColumn('user_id', 'A.user_id')
                     ->where('question_id', $question['id'])
-                    ->where('privacy_id', 3)
+                    ->whereHas('privacy', function($q){
+                        $q->where('privacyId', 3);
+                    })
                     ->getQuery();
             }
             $answers = $answers->selectSub($answer, $question['id']);

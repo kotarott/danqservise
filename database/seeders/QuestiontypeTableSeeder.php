@@ -16,21 +16,27 @@ class QuestiontypeTableSeeder extends Seeder
         //
         \DB::table('questiontypes')->insert([
             [
+                'typeId' => 1,
                 'typename' => 'テキスト',
             ],
             [
+                'typeId' => 2,
                 'typename' => '選択肢',
             ],
             [
+                'typeId' => 3,
                 'typename' => '数値（整数）',
             ],
             [
+                'typeId' => 4,
                 'typename' => '5段階',
             ],
             [
+                'typeId' => 5,
                 'typename' => '10段階',
             ],
             [
+                'typeId' => 6,
                 'typename' => '100点満点',
             ],
         ]);

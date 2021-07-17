@@ -26,7 +26,7 @@
                         </div>
 
                         <!-- テキストタイプ -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 1">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 1">
                             <!-- 回答 -->
                             <jet-label for="answer" value="回答を入力してください" />
                             <textarea 
@@ -37,7 +37,7 @@
                         </div>
 
                         <!-- 選択肢 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 2">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 2">
                             <!-- 回答 -->
                             <jet-label for="answer" value="回答を選択してください" />
                             <div v-for="(selection, k) in selections" :key="k">
@@ -47,7 +47,7 @@
                         </div>
 
                         <!-- 数値（整数） -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 3">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 3">
                             <!-- 回答 -->
                             <jet-label for="answer" value="回答を入力してください" />
                             <jet-input
@@ -59,7 +59,7 @@
                         </div>
 
                         <!-- 5段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 4">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 4">
                             <!-- 回答 -->
                             <jet-label for="answer" value="5段階で評価してください" />
                             <jet-input
@@ -74,7 +74,7 @@
                         </div>
 
                         <!-- 10段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 5">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 5">
                             <!-- 回答 -->
                             <jet-label for="answer" value="5段階で評価してください" />
                             <jet-input
@@ -89,7 +89,7 @@
                         </div>
 
                         <!-- 100段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="question.questiontype_id == 6">
+                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 6">
                             <!-- 回答 -->
                             <jet-label for="answer" value="5段階で評価してください" />
                             <jet-input
@@ -144,7 +144,7 @@
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
 
     export default {
-        props: ['question', 'selections', 'privacies'],
+        props: ['question', 'questionType', 'selections', 'privacies'],
         components: {
             AppLayout,
             JetFormSection,
@@ -162,7 +162,7 @@
                         answer_text: "",
                         answer_num: 0,
                         question_id: this.question.id,
-                        questionType: this.question.questiontype_id,
+                        questionType: this.questionType.typeId,
                         privacy: NaN
                     },
                     {

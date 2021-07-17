@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Questiontype;
 use App\Models\Privacy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -88,7 +89,8 @@ class AnswerController extends Controller
     public function show(Answer $answer)
     {
         $questionId = $answer->question_id;
-        $type = $answer->question->questiontype_id;
+        $questionTypeId = $answer->question->questiontype_id;
+        $type = Questiontype::find($questionTypeId)->typeId;
         $answers = Answer::where('question_id', $questionId);
         $privacies = Privacy::all();
         $question = $answer->question->withCount('answers')->find($questionId);
@@ -100,7 +102,6 @@ class AnswerController extends Controller
         }else if($type >= 3 && $type <= 6) {
             $result = $answers->select('int')->get()->countBy('int')->toArray();
         }
-        // dd($result);
 
         if($type != 1) {
             $labels = array_keys($result);

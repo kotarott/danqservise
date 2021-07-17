@@ -18,10 +18,6 @@
                                 <p class="leading-relaxed mb-3">{{ question.description }}</p>
                                 <p class="leading-relaxed mb-3">作成日：{{ toDate(question.created_at) }}</p>
                                 <a class="text-indigo-500 inline-flex items-center">
-                                    <!-- <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M5 12h14"></path>
-                                    <path d="M12 5l7 7-7 7"></path>
-                                    </svg> -->
                                     <inertia-link
                                         :href="route('question.show', question.id)"
                                         v-if="!question.answer_status"
@@ -64,77 +60,6 @@
                 </section>
             </div>
         </div>
-
-    <!-- <table class="min-w-full table-auto">
-        <thead class="justify-between">
-            <tr class="bg-gray-800">
-                <th class="px-16 py-2">
-                    <span class="text-gray-300">#</span>
-                </th>
-                <th class="px-16 py-2">
-                    <span class="text-gray-300">タイトル</span>
-                </th>
-                <th class="px-16 py-2">
-                    <span class="text-gray-300">説明</span>
-                </th>
-                <th class="px-16 py-2">
-                    <span class="text-gray-300">作成日</span>
-                </th>
-                <th class="px-16 py-2">
-                    <span class="text-gray-300">ステータス</span>
-                </th>
-          </tr>
-        </thead>
-        <tbody class="bg-gray-200">
-            <tr class="bg-white border-4 border-gray-200" v-for="(question, index) in questions" :key="index">
-                <td class="px-16 py-2 flex flex-row items-center">
-                    <p>{{ index }}</p>
-                </td>
-                <td>
-                    <span class="text-center ml-2 font-semibold">{{ question.title }}</span>
-                </td>
-                <td class="px-16 py-2">
-                    <span class="text-center ml-2 font-semibold">{{ question.description }}</span>
-                </td>
-                <td class="px-16 py-2">
-                    <span>{{ toDate(question.created_at) }}</span>
-                </td>
-                <td class="px-16 py-2">
-                    <inertia-link
-                        :href="route('question.show', question.id)"
-                        v-if="!question.answer_status"
-                    >
-                        <button
-                            class="bg-green-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
-                        >
-                            回答する
-                        </button>
-                    </inertia-link>
-
-                    <inertia-link
-                        :href="route('answer.show', question.answer_status)"
-                        v-else
-                    >
-                        <button
-                            class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black"
-                        >
-                            確認する
-                        </button>
-                    </inertia-link>
-                </td>
-          </tr>
-
-        </tbody>
-    </table> -->
-
-    <jet-dialog-modal :show="toggleModal" @close="toggleModal = false">
-        <template #title>
-            Product added
-        </template>
-        <template #content>
-            
-        </template>
-    </jet-dialog-modal>
 
     </app-layout>
 </template>

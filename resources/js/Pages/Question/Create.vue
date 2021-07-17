@@ -40,8 +40,8 @@
                                 class="mt-1 block w-full form-input rounded-md shadow-sm"
                             >
                                 <option disable value="">質問タイプを選択してください</option>
-                                <option v-for="(type, id) in questionTypes" :key="id" :value="id">
-                                    {{ type }}
+                                <option v-for="(questiontype, id) in questionTypes" :key="id" :value="questiontype.typeId">
+                                    {{ questiontype.typename }}
                                 </option>
                             </select>
                             <!-- <jet-input-error 

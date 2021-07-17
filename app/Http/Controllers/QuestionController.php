@@ -29,10 +29,15 @@ class QuestionController extends Controller
             ->where('user_id', Auth::id())
             ->getQuery();
 
+        $questionType = Questiontype::select('typeId')
+            ->whereColumn('id', 'questions.questiontype_id')
+            ->getQuery();
+
         // questionの取得
-        $questions = Question::select('id', 'title', 'description', 'questiontype_id', 'created_at')
+        $questions = Question::select('id', 'title', 'description', 'created_at')
             ->where('status', 0)
             ->selectSub($answers, 'answer_status')
+            ->selectSub($questionType, 'typeId')
             ->withCount('answers')
             ->get()
             ->shuffle();
@@ -48,7 +53,8 @@ class QuestionController extends Controller
     public function create()
     {
         // typeを取得して質問を作成する
-        $questionTypes = Questiontype::pluck('typename', 'id');
+        $questionTypes = Questiontype::select('id', 'typeId', 'typename')->get()->toArray();
+        // dd($questionTypes);
         return Inertia::render('Question/Create', ['questionTypes' => $questionTypes]);
     }
 
@@ -71,20 +77,21 @@ class QuestionController extends Controller
         ])->validateWithBag('questionCreate');
 
         // dd($input);
+        $questionTypeId = Questiontype::where('typeId', $request->questionType)->value('id');
 
         // db登録
         $question = new Question;
         $question->title = $request->title;
         $question->description = $request->description;
         $question->result = $request->result;
-        $question->questiontype_id = $request->questionType;
+        $question->questiontype_id = $questionTypeId;
         $question->status = $request->status;
         $question->user_id = Auth::id();
         $question->save();
 
         $last_insert_id = $question->id;
         
-        if($request->questionType == 2){
+        if($questionTypeId == 2){
             foreach($request->selections as $selection){
                 if($selection) {
                     $selections = new Selection;
@@ -107,10 +114,11 @@ class QuestionController extends Controller
     public function show(Question $question)
     {
         $selections = $question->selections;
+        $questionType = $question->questiontype;
         $privacies = Privacy::all();
         return Inertia::render(
             'Answer/Create',
-            ['question' => $question, 'selections' => $selections, 'privacies' => $privacies]
+            ['question' => $question, 'questionType' => $questionType, 'selections' => $selections, 'privacies' => $privacies]
         );
     }
 
