@@ -4,133 +4,131 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 回答
             </h2>
-            
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <jet-form-section @submitted="createAnswer">
-                    <template #title>回答する</template>
-                    <template #description>質問への回答を作成します</template>
-                    <template #form>
-                        <div class="col-span-6 sm:col-span-4">
-                            <jet-validation-errors bag="answerCreate" class="mb-4" />
-                        </div>
+                    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                        <jet-form-section @submitted="createAnswer">
+                            <template #title>回答する</template>
+                            <template #description>質問への回答を作成します</template>
+                            <template #form>
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <jet-validation-errors bag="answerCreate" class="mb-4" />
+                                    </div>
 
-                        <!-- タイトル -->
-                        <div class="col-span-6 sm:col-span-4">
-                            <p class="text-base sm:text-lg md:text-xl lg:text-xl xl:text-xl text-indigo-700 font-semibold underline">{{ question.title }}</p>
-                        </div>
+                                    <!-- タイトル -->
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <p class="text-base sm:text-lg md:text-xl lg:text-xl xl:text-xl text-indigo-700 font-semibold underline">{{ question.title }}</p>
+                                    </div>
 
-                        <!-- テキストタイプ -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 1">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="回答を入力してください" />
-                            <textarea 
-                                v-model="form.answer_text"
-                                class="mt-1 block w-full form-input rounded-md shadow-sm"
-                                id="answer"
-                            />
-                        </div>
+                                    <!-- テキストタイプ -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 1">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="回答を入力してください" />
+                                        <textarea 
+                                            v-model="form.answer_text"
+                                            class="mt-1 block w-full form-input rounded-md shadow-sm"
+                                            id="answer"
+                                        />
+                                    </div>
 
-                        <!-- 選択肢 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 2">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="回答を選択してください" />
-                            <div v-for="(selection, k) in selections" :key="k">
-                                <input type="radio" :id="k" :value="selection.selection" v-model="form.answer_text">
-                                <label :for="k">{{ selection.selection }}</label>
-                            </div>
-                        </div>
+                                    <!-- 選択肢 -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 2">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="回答を選択してください" />
+                                        <div v-for="(selection, k) in selections" :key="k">
+                                            <input type="radio" :id="k" :value="selection.selection" v-model="form.answer_text">
+                                            <label :for="k">{{ selection.selection }}</label>
+                                        </div>
+                                    </div>
 
-                        <!-- 数値（整数） -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 3">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="回答を入力してください" />
-                            <jet-input
-                                id="answer"
-                                type="number"
-                                class="mt-1 block w-full"
-                                v-model.number="form.answer_num"
-                            />
-                        </div>
+                                    <!-- 数値（整数） -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 3">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="回答を入力してください" />
+                                        <jet-input
+                                            id="answer"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            v-model.number="form.answer_num"
+                                        />
+                                    </div>
 
-                        <!-- 5段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 4">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="5段階で評価してください" />
-                            <jet-input
-                                id="answer"
-                                type="range"
-                                class="mt-1 block w-full"
-                                v-model.number="form.answer_num"
-                                max = '5'
-                                min = '1'
-                                step = '1'
-                            />
-                        </div>
+                                    <!-- 5段階 -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 4">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="5段階で評価してください" />
+                                        <jet-input
+                                            id="answer"
+                                            type="range"
+                                            class="mt-1 block w-full"
+                                            v-model.number="form.answer_num"
+                                            max = '5'
+                                            min = '1'
+                                            step = '1'
+                                        />
+                                    </div>
 
-                        <!-- 10段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 5">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="5段階で評価してください" />
-                            <jet-input
-                                id="answer"
-                                type="range"
-                                class="mt-1 block w-full"
-                                v-model.number="form.answer_num"
-                                max = '10'
-                                min = '1'
-                                step = '1'
-                            />
-                        </div>
+                                    <!-- 10段階 -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 5">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="5段階で評価してください" />
+                                        <jet-input
+                                            id="answer"
+                                            type="range"
+                                            class="mt-1 block w-full"
+                                            v-model.number="form.answer_num"
+                                            max = '10'
+                                            min = '1'
+                                            step = '1'
+                                        />
+                                    </div>
 
-                        <!-- 100段階 -->
-                        <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 6">
-                            <!-- 回答 -->
-                            <jet-label for="answer" value="5段階で評価してください" />
-                            <jet-input
-                                id="answer"
-                                type="range"
-                                class="mt-1 block w-full"
-                                v-model.number="form.answer_num"
-                                max = '100'
-                                min = '1'
-                                step = '1'
-                            />
-                        </div>
+                                    <!-- 100段階 -->
+                                    <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 6">
+                                        <!-- 回答 -->
+                                        <jet-label for="answer" value="5段階で評価してください" />
+                                        <jet-input
+                                            id="answer"
+                                            type="range"
+                                            class="mt-1 block w-full"
+                                            v-model.number="form.answer_num"
+                                            max = '100'
+                                            min = '1'
+                                            step = '1'
+                                        />
+                                    </div>
 
-                        <div class="col-span-6 sm:col-span-4">
-                            <!-- プライバシー -->
-                            <jet-label for="privacy_id" value="プライバシー設定" />
-                            <select 
-                                v-model.number="form.privacy"
-                                name=""
-                                id="privacy" 
-                                class="mt-1 block w-full form-input rounded-md shadow-sm"
-                            >
-                                <option disable value="">公開範囲を選択してください</option>
-                                <option v-for="(privacy, id) in privacies" :key="id" :value="privacy.id">
-                                    {{ privacy.status }}
-                                </option>
-                            </select>
-                        </div>
-
-                    </template>
-                    <template #actions>
-                        <jet-button class="bg-blue-700">
-                            回答
-                        </jet-button>
-                    </template>
-                </jet-form-section>
-            </div>
-        </div>
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <!-- プライバシー -->
+                                        <jet-label for="privacy_id" value="プライバシー設定" />
+                                        <select 
+                                            v-model.number="form.privacy"
+                                            name=""
+                                            id="privacy" 
+                                            class="mt-1 block w-full form-input rounded-md shadow-sm"
+                                        >
+                                            <option disable value="">公開範囲を選択してください</option>
+                                            <option v-for="(privacy, id) in privacies" :key="id" :value="privacy.id">
+                                                {{ privacy.status }}
+                                            </option>
+                                        </select>
+                                    </div>
+                            </template>
+                            <template #actions>
+                                    <jet-button class="bg-blue-700">
+                                            回答
+                                    </jet-button>
+                            </template>
+                        </jet-form-section>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <pre>{{ questionType }}</pre>
     </app-layout>
 </template>
 
