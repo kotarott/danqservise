@@ -128,8 +128,6 @@
             </div>
         </div>
 
-        <pre>{{ questionType }}</pre>
-        <pre>{{ selections }}</pre>
     </app-layout>
 </template>
 

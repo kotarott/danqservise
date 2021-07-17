@@ -91,7 +91,7 @@ class QuestionController extends Controller
 
         $last_insert_id = $question->id;
         
-        if($$request->questionType == 2){
+        if($request->questionType == 2){
             foreach($request->selections as $selection){
                 if($selection) {
                     $selections = new Selection;
