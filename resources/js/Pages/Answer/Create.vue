@@ -74,7 +74,7 @@
                                     <!-- 10段階 -->
                                     <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 5">
                                         <!-- 回答 -->
-                                        <jet-label for="answer" value="5段階で評価してください" />
+                                        <jet-label for="answer" value="10段階で評価してください" />
                                         <jet-input
                                             id="answer"
                                             type="range"
@@ -89,7 +89,7 @@
                                     <!-- 100段階 -->
                                     <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 6">
                                         <!-- 回答 -->
-                                        <jet-label for="answer" value="5段階で評価してください" />
+                                        <jet-label for="answer" value="0~100の間で評価してください" />
                                         <jet-input
                                             id="answer"
                                             type="range"
@@ -129,6 +129,7 @@
         </div>
 
         <pre>{{ questionType }}</pre>
+        <pre>{{ selections }}</pre>
     </app-layout>
 </template>
 
