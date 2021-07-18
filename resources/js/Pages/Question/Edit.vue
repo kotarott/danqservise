@@ -4,7 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 質問作成
             </h2>
-            <pre>{{question}}</pre>
         </template>
 
         <div>

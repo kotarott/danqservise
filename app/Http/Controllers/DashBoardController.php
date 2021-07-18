@@ -23,7 +23,7 @@ class DashBoardController extends Controller
     {
         //最新の投稿3件
         $LatestQuestions = Question::where('status', 0)
-            ->orderBy('created_at', 'des')
+            ->orderBy('created_at', 'desc')
             ->take(3)
             ->get();
         

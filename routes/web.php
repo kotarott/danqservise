@@ -67,7 +67,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/analyze/result', [App\Http\Controllers\AnalyzeController::class, 'result'])
         ->name('analyze.result');
 
-    // test
     Route::post('/question/getJSON/{type}', [App\Http\Controllers\QuestionController::class, 'getJSON'])
         ->name('question.getJSON');
 });

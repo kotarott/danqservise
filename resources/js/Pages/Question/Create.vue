@@ -24,10 +24,6 @@
                                 class="mt-1 block w-full"
                                 v-model="form.title"
                             />
-                            <!-- <jet-input-error
-                                :message="form.error.title"
-                                class="mt-2"
-                            /> -->
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
@@ -44,10 +40,6 @@
                                     {{ questiontype.typename }}
                                 </option>
                             </select>
-                            <!-- <jet-input-error 
-                                :message="form.error('questionType')"
-                                class="mt-2"
-                            /> -->
                         </div>
 
 
@@ -64,22 +56,7 @@
                                         v-model="form.selections[n-1]"
                                     >
                                 </li>
-                                <!-- <li v-for="(item, k) in form.selections" :key="k">
-                                    <span>{{ item }}</span>
-                                    <p v-on:click="deleteSelections(k)">削除</p>
-                                </li> -->
                             </ul>
-                            <!-- <input
-                                type='text'
-                                class=''
-                                id='inputSlections'
-                                placeholder='選択肢を入力'
-                                v-model="$data.newSelection"
-                            >
-                            <p v-on:click="addSelections()">選択肢を追加</p> -->
-                            <!-- <pre>
-                                {{ $data }}
-                            </pre> -->
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
@@ -113,15 +90,17 @@
                                 <option :value="0">公開</option>
                                 <option :value="1">下書き</option>
                             </select>
-                            <!-- <jet-input-error 
-                                :message="form.error('status')"
-                                class="mt-2"
-                            /> -->
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
                             <!-- 注意事項の同意 -->
                             <jet-label for="checkCaution" value="注意事項" />
+                            <p class="bg-yellow-100 sm:rounded-lg px-2">
+                                <ul>
+                                    <li>共有する場合：他の回答と紐づけられます。</li>
+                                    <li>共有しない場合：この質問の中でのみ利用が可能です。</li>
+                                </ul>
+                            </p>
                             <input
                                 id="checkCaution"
                                 type="checkbox"
@@ -129,10 +108,6 @@
                                 v-model="form.caution"
                             />
                             <label for="checkCaution" class="mt-1">同意する</label>
-                            <!-- <jet-input-error 
-                                :message="form.error('caution')"
-                                class="mt-2"
-                            /> -->
                         </div>
 
                     </template>
