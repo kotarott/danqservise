@@ -28,7 +28,6 @@
                                             回答する
                                         </button>
                                     </inertia-link>
-
                                     <inertia-link
                                         :href="route('answer.show', question.answer_status)"
                                         v-else

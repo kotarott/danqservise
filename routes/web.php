@@ -38,7 +38,9 @@ Route::group(['middleware' => 'auth'], function(){
             'index' => 'question.index',
             'create' => 'question.create',
             'store' => 'question.store',
-            'show' => 'question.show'
+            'show' => 'question.show',
+            'edit' => 'question.edit',
+            'update' => 'question.update'
         ]);
     Route::resource('/answers', AnswerController::class)
         ->names([
@@ -64,4 +66,8 @@ Route::group(['middleware' => 'auth'], function(){
         ->name('analyze.report');
     Route::post('/analyze/result', [App\Http\Controllers\AnalyzeController::class, 'result'])
         ->name('analyze.result');
+
+    // test
+    Route::post('/question/getJSON/{type}', [App\Http\Controllers\QuestionController::class, 'getJSON'])
+        ->name('question.getJSON');
 });

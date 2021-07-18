@@ -91,7 +91,7 @@ class QuestionController extends Controller
 
         $last_insert_id = $question->id;
         
-        if($request->questionType == 2){
+        if($request->questionType == 2 && $request->status == 0){
             foreach($request->selections as $selection){
                 if($selection) {
                     $selections = new Selection;
@@ -130,7 +130,15 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        $questionId = $question->id;
+        $questionTypes = Questiontype::select('id', 'typeId', 'typename')->get()->toArray();
+
+        $mod_question = $question->with('questiontype')->find($questionId);
+
+        return Inertia::render(
+            'Question/Edit',
+            ['questionTypes' => $questionTypes, 'question' => $mod_question]
+        );
     }
 
     /**
@@ -142,7 +150,39 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'title' => ['required'],
+            'questionType' => ['required'],
+            'status' => ['required'],
+            'caution' => ['accepted'],
+            'selections.*' => ['max:100'],
+        ])->validateWithBag('questionUpdate');
+
+        $questionTypeId = Questiontype::where('typeId', $request->questionType)->value('id');
+
+        $question->title = $request->title;
+        $question->description = $request->description;
+        $question->result = $request->result;
+        $question->questiontype_id = $questionTypeId;
+        $question->status = $request->status;
+        $question->user_id = Auth::id();
+        $question->save();
+
+        $last_insert_id = $question->id;
+        
+        if($request->questionType == 2 && $request->status == 0){
+            foreach($request->selections as $selection){
+                if($selection) {
+                    $selections = new Selection;
+                    $selections->question_id = $last_insert_id;
+                    $selections->selection = $selection;
+                    $selections->save();
+                }
+            }
+        }
+
+        return Redirect::route('question.index');
     }
 
     /**
@@ -154,5 +194,21 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+    }
+
+    public function getJSON($type) {
+        if($type == 'edit') {
+            $questions = Question::where('user_id', Auth::id())
+            ->where('status', 1)
+            ->get();
+        } else if($type == 'latest') {
+            $questions = Question::where('status', 0)
+                ->orderBy('created_at', 'desc')
+                ->take(3)
+                ->get();
+        }
+        
+
+        return response()->json($questions);
     }
 }

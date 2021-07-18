@@ -19,7 +19,7 @@
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    トップ
                                 </jet-nav-link>
 
                                 <jet-nav-link :href="route('question.index')" :active="route().current('question.index')">

@@ -6,12 +6,16 @@
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-3 bg-green-100">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <!-- <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg"> -->
-                    <!-- <welcome /> -->
-                    
-                <!-- </div> -->
+                <h2 class="font-semibold text-xl">最新の投稿</h2>
+                    <GetQuestions :type="'latest'"></GetQuestions>
+            </div>
+        </div>
+        <div class="py-3">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <h2 class="font-semibold text-xl">編集中のコンテンツ</h2>
+                    <GetQuestions :type="'edit'"></GetQuestions>
             </div>
         </div>
         
@@ -20,12 +24,12 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
-    import Welcome from '@/Jetstream/Welcome'
+    import GetQuestions from '@/components/GetQuestions'
 
     export default {
         components: {
             AppLayout,
-            Welcome,
+            GetQuestions
         },
     }
 </script>

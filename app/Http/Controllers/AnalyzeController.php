@@ -25,6 +25,9 @@ class AnalyzeController extends Controller
             ->whereHas('answers', function($q){
                 $q->where('user_id', Auth::id());
             })
+            ->whereHas('answers.privacy', function($s) {
+                $s->where('privacyId', 3);
+            })
             ->get();
         
         return Inertia::render(
@@ -98,83 +101,7 @@ class AnalyzeController extends Controller
     {
         //
     }
-
-    // public function report_ee(Request $request) // memo
-    // {
-    //     $input = $request->all();
-
-    //     // バリデーション
-    //     $validator = Validator::make($input, [
-    //         'selected' => ['max:5', 'min:1'],
-    //     ])->validateWithBag('reportGet');
-
-    //     $ids = collect($request->selected)->sort()->values()->toArray();
-    //     $selectedQuestions = Question::whereIn('id', $ids);
-    //     $width = 97 / count($ids);
-
-    //     $columns[] = [
-    //         'label' => '#',
-    //         'field' => 'user_id',
-    //         'width' => '3%',
-    //         'sortable' => true,
-    //         'isKey' => true,
-    //     ];
-
-    //     $questions = $selectedQuestions
-    //         ->pluck('title', 'id')
-    //         ->sortKeys()
-    //         ->values()
-    //         ->toArray();
-
-    //     foreach($questions as $id=>$title){
-    //         $columns[] = [
-    //             'label' => $title,
-    //             'field' => $id,
-    //             'width' => $width."%",
-    //             'sortable' => true,
-    //         ];
-    //     };
-
-    //     $questionTypes = $selectedQuestions
-    //         ->pluck('questiontype_id', 'id')
-    //         ->sortKeys()
-    //         ->toArray();
-
-    //     $answers = Answer::from('answers as A')
-    //         ->select(DB::raw('CONCAT("#", "") AS user'))
-    //         ->whereIn('question_id', $ids)
-    //         ->groupBy('user_id');
-
-    //     foreach($questionTypes as $id=>$type) {
-    //         if($type == 1) {
-    //             $answer = Answer::select('text')
-    //                 ->whereColumn('user_id', 'A.user_id')
-    //                 ->where('question_id', $id)
-    //                 ->where('privacy_id', 3)
-    //                 ->getQuery();
-    //         }else if($type == 2) {
-    //             $answer = Answer::select('selection')
-    //                 ->whereColumn('user_id', 'A.user_id')
-    //                 ->where('question_id', $id)
-    //                 ->where('privacy_id', 3)
-    //                 ->getQuery();
-    //         } else if($type >=3 && $type <= 6) {
-    //             $answer = Answer::select('int')
-    //                 ->whereColumn('user_id', 'A.user_id')
-    //                 ->where('question_id', $id)
-    //                 ->where('privacy_id', 3)
-    //                 ->getQuery();
-    //         }
-    //         $answers = $answers->selectSub($answer, $id);
-    //     }
-    //     $answers = $answers->get()->shuffle();
-
-    //     return Inertia::render(
-    //         'Analyze/Report',
-    //         ['columns' => $columns, 'answers' => $answers]
-    //     );
-    // }
-
+    
     public function report(Request $request)
     {
         $input = $request->all();

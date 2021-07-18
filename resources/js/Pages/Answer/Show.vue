@@ -184,6 +184,7 @@
             updateAnswer: function(value) {
                 this.form.put(route("answer.update", this.yourAnswer.id));
                 event.preventDefault();
+                
             },
             deleteAnswer: function(id) {
                 this.form.delete(route("answer.destroy", id));
