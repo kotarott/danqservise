@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
+                プロフィール
             </h2>
         </template>
 
@@ -28,11 +28,11 @@
 
                 <logout-other-browser-sessions-form :sessions="sessions" class="mt-10 sm:mt-0" />
 
-                <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+                <!-- <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
                     <jet-section-border />
 
                     <delete-user-form class="mt-10 sm:mt-0" />
-                </template>
+                </template> -->
             </div>
         </div>
     </app-layout>

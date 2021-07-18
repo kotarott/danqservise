@@ -101,11 +101,13 @@
                             RK5CYII="
                         />
                     </svg>
-                    <h2 class="title-font sm:text-2xl text-2xl mb-4 hidden lg:inline-block text-gray-500 font-normal">リサーチ共有サービス</h2>
+                    <h2 class="title-font sm:text-2xl text-2xl mb-4 hidden lg:inline-block text-gray-500 font-normal">アンケート共有サービス</h2>
                         <!-- <br class="hidden lg:inline-block text-gray-500 font-normal">アンケート共有サービス -->
 
                     <p class="mb-8 leading-relaxed">
-                        Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.
+                        Danqはアンケートの共有サービスです。<br>
+                        「誰でも」「気軽に」アンケートを作成・回答することができます。<br>
+                        ビジネスや生活に役立つように回答を活用できます。
                     </p>
                     <div class="flex justify-center">
                         <inertia-link :href="route('register')">
