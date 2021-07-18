@@ -197,13 +197,26 @@ class QuestionController extends Controller
     }
 
     public function getJSON($type) {
+
+        // userの回答状況の取得
+        $answers = Answer::select('id')
+            ->whereColumn('question_id', 'questions.id')
+            ->where('user_id', Auth::id())
+            ->getQuery();
+
         if($type == 'edit') {
-            $questions = Question::where('user_id', Auth::id())
-            ->where('status', 1)
-            ->get();
+            $questions = Question::select('id', 'title', 'description', 'status', 'created_at')
+                ->where('user_id', Auth::id())
+                ->where('status', 1)
+                ->selectSub($answers, 'answer_status')
+                ->withCount('answers')
+                ->get();
         } else if($type == 'latest') {
-            $questions = Question::where('status', 0)
+            $questions = Question::select('id', 'title', 'description', 'status', 'created_at')
+                ->where('status', 0)
                 ->orderBy('created_at', 'desc')
+                ->selectSub($answers, 'answer_status')
+                ->withCount('answers')
                 ->take(3)
                 ->get();
         }
