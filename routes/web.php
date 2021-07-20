@@ -19,7 +19,7 @@ use App\Http\Controllers\AnalyzeController;
 |
 */
 
-Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
