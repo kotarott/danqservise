@@ -2,27 +2,31 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                分析：結果
+                集計：グラフ
             </h2> 
         </template>
         
-        <div v-for="(answer, title) in answers" :key="title">
-            <div class="py-2">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <select 
-                        v-model="chartType"
-                        name=""
-                        id="privacy" 
-                        class="mt-1 block w-full form-input rounded-md shadow-sm"
-                    >
-                        <option disable value="">チャートの種類</option>
-                        <option value="BarChart">BarChart</option>
-                        <option value="ColumnChart">ColumnChart</option>
-                        <option value="PieChart">PieChart</option>
-                    </select>
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                        {{ title }}<br>
-                        <GChart :type="chartType" :data="mod_data(answer)" :options="makeOption(title)" />
+        <div class="py-2">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <select 
+                    v-model="chartType"
+                    name=""
+                    id="privacy" 
+                    class="mt-1 block w-full form-input rounded-md shadow-sm"
+                >
+                    <option disable value="">チャートの種類</option>
+                    <option value="BarChart">棒グラフ（横）</option>
+                    <option value="ColumnChart">棒グラフ（縦）</option>
+                    <option value="PieChart">円グラフ</option>
+                </select>
+                <div v-for="(answer, title) in answers" :key="title">
+                    <div class="py-2">
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                                {{ title }}<br>
+                                <GChart :type="chartType" :data="mod_data(answer)" :options="makeOption(title)" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

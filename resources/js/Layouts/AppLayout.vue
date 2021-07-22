@@ -31,7 +31,7 @@
                                 </jet-nav-link>
 
                                 <jet-nav-link :href="route('analyze.index')" :active="route().current('analyze.index')">
-                                    分析
+                                    集計
                                 </jet-nav-link>
                             </div>
                         </div>

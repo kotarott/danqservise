@@ -60,6 +60,7 @@
                                     <div class="col-span-6 sm:col-span-4" v-if="questionType.typeId == 4">
                                         <!-- 回答 -->
                                         <jet-label for="answer" value="5段階で評価してください" />
+                                        <p>あなたの回答：{{form.answer_num}}</p>
                                         <jet-input
                                             id="answer"
                                             type="range"
@@ -104,12 +105,19 @@
                                     <div class="col-span-6 sm:col-span-4">
                                         <!-- プライバシー -->
                                         <jet-label for="privacy_id" value="プライバシー設定" />
+
                                         <select 
                                             v-model.number="form.privacy"
                                             name=""
                                             id="privacy" 
                                             class="mt-1 block w-full form-input rounded-md shadow-sm"
                                         >
+                                            <p class="bg-yellow-100 sm:rounded-lg px-2">
+                                                <ul>
+                                                    <li>共有する場合：他の回答と紐づけられます。</li>
+                                                    <li>共有しない場合：この質問の中でのみ利用が可能です。</li>
+                                                </ul>
+                                            </p>
                                             <option disable value="">公開範囲を選択してください</option>
                                             <option v-for="(privacy, id) in privacies" :key="id" :value="privacy.id">
                                                 {{ privacy.status }}

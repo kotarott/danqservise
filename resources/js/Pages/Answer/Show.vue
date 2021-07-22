@@ -4,7 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ question.title }}
             </h2>
-            <!-- <button v-on:click="toggleModal = !toggleModal">共有設定</button> -->
             <div class="text-right">
                 <jet-button
                     class="bg-green-400 mx-2"
@@ -32,12 +31,12 @@
                                 <p class="leading-relaxed">すべての回答</p>
                             </div>
                             <div class="p-4 sm:w-1/4 w-1/2">
-                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">1.8K</h2>
-                                <p class="leading-relaxed">今月の回答数（仮）</p>
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900"> </h2>
+                                <p class="leading-relaxed">今月の回答数</p>
                             </div>
                             <div class="p-4 sm:w-1/4 w-1/2">
-                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">88</h2>
-                                <p class="leading-relaxed">今日の回答数（仮）</p>
+                                <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900"> </h2>
+                                <p class="leading-relaxed">今日の回答数</p>
                             </div>
                             <div class="p-4 sm:w-1/4 w-1/2">
                                 <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">{{ toDate(question.created_at) }}</h2>
@@ -51,6 +50,17 @@
 
         <div class="py-2" v-if="question.questiontype_id != 1">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <select 
+                    v-model="chartType"
+                    name=""
+                    id="selectType" 
+                    class="mt-1 block w-full form-input rounded-md shadow-sm"
+                >
+                    <option disable value="">チャートの種類</option>
+                    <option value="BarChart">棒グラフ（横）</option>
+                    <option value="ColumnChart">棒グラフ（縦）</option>
+                    <option value="PieChart">円グラフ</option>
+                </select>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg" v-for="(answer, title) in result" :key="title">
                     <GChart :type="chartType" :data="mod_data(answer)" :options="makeOption(title)" />
                 </div>
@@ -59,26 +69,15 @@
 
         <div class="py-2" v-if="question.questiontype_id == 1">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <section class="text-gray-600 body-font overflow-hidden">
-                        <div class="container px-5 py-24 mx-auto">
-                            <div class="-my-8 divide-y-2 divide-gray-100" v-for="(answer, index) in result" :key="index">
-                                <div class="py-8 flex flex-wrap md:flex-nowrap">
-                                    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                                        <span class="font-semibold title-font text-gray-700">{{ index + 1 }}</span>
-                                        <span class="mt-1 text-gray-500 text-sm">{{ toDate(answer.created_at) }}</span>
-                                        <!-- <span class="font-semibold title-font text-gray-700">{{ answer.created_at }}</span> -->
-                                    </div>
-                                    <div class="md:flex-grow">
-                                        <p class="leading-relaxed font-medium text-gray-900">{{ answer.text }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div id="task-comments" class="pt-4"  v-for="(answer, index) in result" :key="index">
+                    <!--     comment-->
+                    <div class="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                        <div class="flex flex-row justify-center mr-2">
+                            <!-- <img alt="avatar" width="48" height="48" class="rounded-full w-10 h-10 mr-4 shadow-lg mb-4" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png"> -->
+                            <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left ">{{ toDate(answer.created_at) }}</h3>
                         </div>
-                    </section>
-                    <!-- <ul v-for="(answer, index) in result" :key="index">
-                        #{{index}}<li>{{  }}</li>
-                    </ul> -->
+                        <p style="width: 90%" class="text-gray-600 text-lg text-center md:text-left ">{{ answer.text }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,7 +97,7 @@
                 <P class="bg-yellow-100 shadow-md sm:rounded-lg px-2">{{ yourAnswer.selection }}</p>
             </div>
             <form class="m-4">
-                <label for="privacy">共有範設定の変更</label>
+                <label for="privacy">共有設定の変更</label>
                 <select 
                     v-model.number="form.privacy"
                     name=""

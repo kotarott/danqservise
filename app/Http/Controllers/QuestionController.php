@@ -39,8 +39,15 @@ class QuestionController extends Controller
             ->selectSub($answers, 'answer_status')
             ->selectSub($questionType, 'typeId')
             ->withCount('answers')
-            ->get()
-            ->shuffle();
+            ->orderBy('answers_count', 'desc')
+            ->paginate(15);
+
+        // summary取得
+        // $summary = [
+        //     "users" => User::all()->count(),
+        //     "questions" => Question::all()->count(),
+        //     "answers" => Answer::all()->count()
+        // ];
 
         return Inertia::render('Question/Index', ['questions' => $questions]);
     }
@@ -219,8 +226,22 @@ class QuestionController extends Controller
                 ->withCount('answers')
                 ->take(3)
                 ->get();
+        } else if($type == 'answerd') {
+            // $questions = Question::select('id', 'title', 'description', 'status', 'created_at')
+            //     ->where('status', 0)
+            //     ->orderBy('created_at', 'desc')
+            //     ->selectSub($answers, 'answer_status')
+            //     ->withCount('answers')
+            //     ->get();
+            
+            $questions = Question::where('status', 0)
+                ->orderBy('created_at', 'desc')
+                ->rightJoin('answers', 'question_id', '=', 'questions.id')
+                ->where('answers.user_id', '=', Auth::id())
+                ->withCount('answers')
+                ->select('questions.id', 'title', 'description', 'status','answers.id as answer_status', 'questions.created_at')
+                ->get();
         }
-        
 
         return response()->json($questions);
     }

@@ -41,6 +41,7 @@
         "vue-chartjs": "^3.5.1",
         "vue-moment": "^4.1.0",
         "vue-select": "^3.11.2",
+        "vue-tailwind": "^2.4.2",
         "vue3-chart-v2": "^0.8.2",
         "vue3-googl-chart": "0.0.1",
         "vue3-table-lite": "^1.0.5"

@@ -97,8 +97,7 @@
                             <jet-label for="checkCaution" value="注意事項" />
                             <p class="bg-yellow-100 sm:rounded-lg px-2">
                                 <ul>
-                                    <li>共有する場合：他の回答と紐づけられます。</li>
-                                    <li>共有しない場合：この質問の中でのみ利用が可能です。</li>
+                                    <li>公開後は内容の変更ができません</li>
                                 </ul>
                             </p>
                             <input

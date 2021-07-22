@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\QuestionController;
+use App\Models\User;
+use App\Models\Question;
+use App\Models\Answer;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnalyzeController;
 
@@ -31,7 +34,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'summary' => [
+            "users" => User::all()->count(),
+            "questions" => Question::all()->count(),
+            "answers" => Answer::all()->count()
+        ]
+    ]);
 })->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function(){

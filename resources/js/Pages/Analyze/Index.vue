@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                分析：質問一覧
+                集計：質問選択
             </h2>
             <div class="text-right">
                 <jet-button
@@ -27,6 +27,13 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <form class="m-4">
                         <label for="selectQuestions">グラフで取得</label>
+                        <p class="bg-yellow-100 sm:rounded-lg px-2">
+                            <ul>
+                                <li>・最大で5つの質問を選択できます。</li>
+                                <li>・回答済みの共有が許可された質問のみ選択できます。</li>
+                                <li>・回答タイプがテキストの場合はグラフでの取得はできません。</li>
+                            </ul>
+                        </p>
                         <select 
                             v-model.number="form.selected"
                             id="selectQuestions" 
@@ -58,6 +65,12 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <form class="m-4">
                         <label for="selectQuestions">テーブルで取得</label>
+                        <p class="bg-yellow-100 sm:rounded-lg px-2">
+                            <ul>
+                                <li>・最大で5つの質問を選択できます。</li>
+                                <li>・回答済みの共有が許可された質問のみ選択できます。</li>
+                            </ul>
+                        </p>
                         <select 
                             v-model.number="form.selected"
                             id="selectQuestions" 
