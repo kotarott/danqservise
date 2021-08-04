@@ -244,8 +244,6 @@ class AnalyzeController extends Controller
             
         }
         $answers = $answers->get()->shuffle();
-        // dd($answers);
-        // dd(array_column($answers->toArray(),'id'));
 
         foreach($questions as $question) {
             $result = $answers->countBy($question['id'])->toArray();

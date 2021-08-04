@@ -119,7 +119,27 @@
             </div>
         </div>
 
-        
+        <div class="py-3">
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <section class="body-font">
+                    <div class="container px-5 py-3 mx-auto bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                        <InputTitle v-if="stepNumber == 1" @update="updateForm"></InputTitle>
+                        <SelectComponent v-if="stepNumber == 2" :items="questionTypes" @update="updateForm"></SelectComponent>
+                        <div class="py-2">
+                            <div class="flex justify-center">
+                                <jet-button class="bg-gray-300 px-4 py-2 m-2" @click="backStep">
+                                    前に戻る
+                                </jet-button>
+                                <jet-button class="bg-blue-700 px-4 py-2 m-2" @click="nextStep">
+                                    次に進む
+                                </jet-button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
     </app-layout>
 </template>
 
@@ -131,6 +151,8 @@
     import JetLabel from '@/Jetstream/Label'
     import JetInputError from '@/Jetstream/InputError'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
+    import InputTitle from '@/components/createQuestion/InputTitle'
+    import SelectComponent from '@/components/createQuestion/SelectComponent'
 
     export default {
         props: ['questionTypes'],
@@ -142,6 +164,8 @@
             JetButton,
             JetInputError,
             JetValidationErrors,
+            InputTitle,
+            SelectComponent,
         },
         data() {
             return {
@@ -161,7 +185,8 @@
                         resetOnSuccess: false,
                     }
                 ),
-                newSelection: ""
+                newSelection: "",
+                stepNumber: 1
             }
         },
         computed: {
@@ -190,6 +215,15 @@
                 var item = this.newSelection;
                 this.form.selections.push(item);
                 this.newSelection = '';
+            },
+            updateForm:function(formData){
+                Object.assign(this.form, formData);
+            },
+            backStep:function(){
+                this.stepNumber--;
+            },
+            nextStep:function(){
+                this.stepNumber++;
             },
         }
     }
